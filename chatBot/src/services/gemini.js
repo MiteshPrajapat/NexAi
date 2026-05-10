@@ -15,7 +15,7 @@ export const generateChatResponse = async (prompt, history = []) => {
   }
 
   try {
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' }); // Use flash for speed, or pro if specified
+    const model = genAI.getGenerativeModel({ model: 'gemini-flash-latest' }); // Use flash for speed, or pro if specified
 
     // Convert our internal history format to Gemini's format
     const formattedHistory = history.map(msg => ({
