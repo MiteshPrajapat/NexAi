@@ -25,6 +25,8 @@ const ChatInput = () => {
       return await generateChatResponse(prompt, messages);
     } else if (modelId === 'groq') {
       return await generateGroqResponse(prompt, messages);
+    } else if (modelId === 'deepseek') {
+      return await generateOpenRouterResponse(prompt, messages, 'deepseek/deepseek-v3.2-exp');
     } else if (modelId === 'openrouter') {
       return await generateOpenRouterResponse(prompt, messages);
     } else {

@@ -26,7 +26,7 @@ const getModelName = (modelId) => {
     case 'openrouter': return 'OpenRouter';
     case 'chatgpt': return 'ChatGPT-4';
     case 'claude': return 'Claude 3 Opus';
-    case 'deepseek': return 'DeepSeek V2';
+    case 'deepseek': return 'DeepSeek V3';
     case 'perplexity': return 'Perplexity';
     default: return modelId || 'AI Assistant';
   }
