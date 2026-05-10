@@ -2,13 +2,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Send, Paperclip, Mic } from 'lucide-react';
 import ModelSelector from './ModelSelector';
 import { generateChatResponse } from '../../services/gemini';
+import { generateGroqResponse } from '../../services/groq';
 import { useChat } from '../../context/ChatContext';
 import toast from 'react-hot-toast';
 
 const ChatInput = () => {
   const [input, setInput] = useState('');
   const textareaRef = useRef(null);
-  const { messages, addMessage, isLoading, setIsLoading, selectedModel } = useChat();
+  const { messages, addMessage, isLoading, setIsLoading, appMode, selectedModels } = useChat();
 
   const handleInput = (e) => {
     setInput(e.target.value);
@@ -18,14 +19,19 @@ const ChatInput = () => {
     }
   };
 
+  const callModel = async (modelId, prompt) => {
+    if (modelId === 'gemini') {
+      return await generateChatResponse(prompt, messages);
+    } else if (modelId === 'groq') {
+      return await generateGroqResponse(prompt, messages);
+    } else {
+      throw new Error('Selected model is not supported yet.');
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
-
-    if (selectedModel !== 'gemini') {
-      toast.error('Selected model is not supported yet.');
-      return;
-    }
 
     const userMessage = { role: 'user', content: input.trim() };
     addMessage(userMessage);
@@ -35,10 +41,30 @@ const ChatInput = () => {
     }
 
     setIsLoading(true);
+
     try {
-      // Pass the previous messages as history to gemini service
-      const response = await generateChatResponse(userMessage.content, messages);
-      addMessage({ role: 'ai', content: response });
+      if (appMode === 'direct') {
+        const response = await callModel(selectedModels.direct, userMessage.content);
+        addMessage({ role: 'ai', content: response, model: selectedModels.direct });
+      } else {
+        const [leftRes, rightRes] = await Promise.allSettled([
+          callModel(selectedModels.left, userMessage.content),
+          callModel(selectedModels.right, userMessage.content)
+        ]);
+
+        addMessage({
+          role: 'ai',
+          isSideBySide: true,
+          left: {
+            model: selectedModels.left,
+            content: leftRes.status === 'fulfilled' ? leftRes.value : `Error: ${leftRes.reason.message || 'Failed'}`
+          },
+          right: {
+            model: selectedModels.right,
+            content: rightRes.status === 'fulfilled' ? rightRes.value : `Error: ${rightRes.reason.message || 'Failed'}`
+          }
+        });
+      }
     } catch (error) {
       console.error(error);
       toast.error(error.message || 'Failed to generate response', {
@@ -48,7 +74,9 @@ const ChatInput = () => {
           color: '#fff',
         },
       });
-      addMessage({ role: 'ai', content: 'Sorry, I encountered an error. Please try again.' });
+      if (appMode === 'direct') {
+        addMessage({ role: 'ai', content: 'Sorry, I encountered an error. Please try again.', model: selectedModels.direct });
+      }
     } finally {
       setIsLoading(false);
     }
@@ -65,7 +93,18 @@ const ChatInput = () => {
     <div className="w-full max-w-4xl mx-auto p-4 md:px-8">
       <div className="relative glass-panel rounded-3xl p-2 pb-3 transition-shadow focus-within:ring-1 focus-within:ring-ai-primary/50">
         <div className="flex px-3 pb-2 pt-1">
-          <ModelSelector />
+          {appMode === 'direct' ? (
+            <ModelSelector panel="direct" />
+          ) : (
+            <div className="flex w-full gap-4">
+              <div className="flex-1 flex justify-start pl-2">
+                <ModelSelector panel="left" />
+              </div>
+              <div className="flex-1 flex justify-end pr-2">
+                <ModelSelector panel="right" />
+              </div>
+            </div>
+          )}
         </div>
         
         <form onSubmit={handleSubmit} className="flex items-end gap-2 px-2">

@@ -14,13 +14,18 @@ export const useChat = () => {
 export const ChatProvider = ({ children }) => {
   const [messages, setMessages] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedModel, setSelectedModel] = useState('gemini');
+  const [appMode, setAppMode] = useState('direct'); // 'direct' or 'side-by-side'
+  const [selectedModels, setSelectedModels] = useState({
+    direct: 'gemini',
+    left: 'gemini',
+    right: 'groq'
+  });
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => setIsSidebarOpen(prev => !prev);
 
-  const handleModelChange = (modelId) => {
-    if (modelId !== 'gemini') {
+  const handleModelChange = (panel, modelId) => {
+    if (modelId !== 'gemini' && modelId !== 'groq') {
       toast('Support Coming Soon', {
         icon: '🚀',
         style: {
@@ -31,7 +36,10 @@ export const ChatProvider = ({ children }) => {
       });
       return;
     }
-    setSelectedModel(modelId);
+    setSelectedModels(prev => ({
+      ...prev,
+      [panel]: modelId
+    }));
   };
 
   const addMessage = (message) => {
@@ -46,7 +54,9 @@ export const ChatProvider = ({ children }) => {
     messages,
     isLoading,
     setIsLoading,
-    selectedModel,
+    appMode,
+    setAppMode,
+    selectedModels,
     handleModelChange,
     isSidebarOpen,
     toggleSidebar,
