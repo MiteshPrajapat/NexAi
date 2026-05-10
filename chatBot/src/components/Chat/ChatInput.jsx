@@ -3,6 +3,7 @@ import { Send, Paperclip, Mic } from 'lucide-react';
 import ModelSelector from './ModelSelector';
 import { generateChatResponse } from '../../services/gemini';
 import { generateGroqResponse } from '../../services/groq';
+import { generateOpenRouterResponse } from '../../services/openrouter';
 import { useChat } from '../../context/ChatContext';
 import toast from 'react-hot-toast';
 
@@ -24,6 +25,8 @@ const ChatInput = () => {
       return await generateChatResponse(prompt, messages);
     } else if (modelId === 'groq') {
       return await generateGroqResponse(prompt, messages);
+    } else if (modelId === 'openrouter') {
+      return await generateOpenRouterResponse(prompt, messages);
     } else {
       throw new Error('Selected model is not supported yet.');
     }

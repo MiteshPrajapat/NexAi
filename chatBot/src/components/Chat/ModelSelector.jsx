@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { ChevronDown, Sparkles, Zap, Box, BrainCircuit, Lightbulb, Hexagon } from 'lucide-react';
+import { ChevronDown, Sparkles, Zap, Box, BrainCircuit, Lightbulb, Hexagon, Globe } from 'lucide-react';
 import { useChat } from '../../context/ChatContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const models = [
   { id: 'gemini', name: 'Gemini 3.1 Pro', icon: Sparkles, color: 'text-blue-400' },
   { id: 'groq', name: 'Groq (Llama 3)', icon: Hexagon, color: 'text-fuchsia-400' },
+  { id: 'openrouter', name: 'OpenRouter', icon: Globe, color: 'text-emerald-400' },
   { id: 'chatgpt', name: 'ChatGPT-4', icon: Zap, color: 'text-green-400' },
   { id: 'claude', name: 'Claude 3 Opus', icon: BrainCircuit, color: 'text-orange-400' },
   { id: 'deepseek', name: 'DeepSeek V2', icon: Box, color: 'text-indigo-400' },
@@ -67,7 +68,7 @@ const ModelSelector = ({ panel = 'direct' }) => {
                 >
                   <model.icon className={`w-4 h-4 ${model.color}`} />
                   {model.name}
-                  {model.id !== 'gemini' && model.id !== 'groq' && (
+                  {model.id !== 'gemini' && model.id !== 'groq' && model.id !== 'openrouter' && (
                     <span className="ml-auto text-[10px] uppercase tracking-wider bg-white/10 px-1.5 py-0.5 rounded text-ai-text-muted/70">
                       Soon
                     </span>

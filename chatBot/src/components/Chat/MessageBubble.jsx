@@ -3,13 +3,14 @@ import { motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
-import { Copy, Sparkles, User, RefreshCw, Hexagon, Zap, BrainCircuit, Box, Lightbulb } from 'lucide-react';
+import { Copy, Sparkles, User, RefreshCw, Hexagon, Zap, BrainCircuit, Box, Lightbulb, Globe } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const getModelIcon = (modelId) => {
   switch (modelId) {
     case 'gemini': return <Sparkles className="w-4 h-4 text-blue-400" />;
     case 'groq': return <Hexagon className="w-4 h-4 text-fuchsia-400" />;
+    case 'openrouter': return <Globe className="w-4 h-4 text-emerald-400" />;
     case 'chatgpt': return <Zap className="w-4 h-4 text-green-400" />;
     case 'claude': return <BrainCircuit className="w-4 h-4 text-orange-400" />;
     case 'deepseek': return <Box className="w-4 h-4 text-indigo-400" />;
@@ -22,6 +23,7 @@ const getModelName = (modelId) => {
   switch (modelId) {
     case 'gemini': return 'Gemini 3.1 Pro';
     case 'groq': return 'Groq (Llama 3)';
+    case 'openrouter': return 'OpenRouter';
     case 'chatgpt': return 'ChatGPT-4';
     case 'claude': return 'Claude 3 Opus';
     case 'deepseek': return 'DeepSeek V2';
