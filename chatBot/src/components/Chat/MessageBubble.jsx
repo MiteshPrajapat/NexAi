@@ -95,9 +95,13 @@ const MessageBubble = ({ message }) => {
 
   if (message.isSideBySide) {
     return (
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col xl:flex-row gap-4 w-full">
-        <ResponsePanel content={message.left.content} modelId={message.left.model} />
-        <ResponsePanel content={message.right.content} modelId={message.right.model} />
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex gap-4 w-full overflow-x-auto snap-x snap-mandatory pb-4 custom-scrollbar">
+        <div className="w-[85%] xl:w-auto xl:flex-1 flex shrink-0 snap-start">
+          <ResponsePanel content={message.left.content} modelId={message.left.model} />
+        </div>
+        <div className="w-[85%] xl:w-auto xl:flex-1 flex shrink-0 snap-start">
+          <ResponsePanel content={message.right.content} modelId={message.right.model} />
+        </div>
       </motion.div>
     );
   }
