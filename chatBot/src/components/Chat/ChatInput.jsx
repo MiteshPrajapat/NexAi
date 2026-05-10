@@ -27,6 +27,8 @@ const ChatInput = () => {
       return await generateGroqResponse(prompt, messages);
     } else if (modelId === 'deepseek') {
       return await generateOpenRouterResponse(prompt, messages, 'deepseek/deepseek-v3.2-exp');
+    } else if (modelId === 'claude') {
+      return await generateOpenRouterResponse(prompt, messages, 'anthropic/claude-3.5-haiku');
     } else if (modelId === 'openrouter') {
       return await generateOpenRouterResponse(prompt, messages);
     } else {
@@ -95,7 +97,7 @@ const ChatInput = () => {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto p-4 md:px-8">
+    <div className="w-full max-w-4xl mx-auto p-4 md:px-8 transition-all duration-300">
       <div className="relative glass-panel rounded-3xl p-2 pb-3 transition-shadow focus-within:ring-1 focus-within:ring-ai-primary/50">
         <div className="flex px-3 pb-2 pt-1">
           {appMode === 'direct' ? (

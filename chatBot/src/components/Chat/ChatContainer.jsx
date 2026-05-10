@@ -5,7 +5,7 @@ import WelcomeScreen from '../UI/WelcomeScreen';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const ChatContainer = () => {
-  const { messages, isLoading } = useChat();
+  const { messages, isLoading, appMode } = useChat();
   const bottomRef = useRef(null);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const ChatContainer = () => {
           <WelcomeScreen />
         </div>
       ) : (
-        <div className="max-w-4xl mx-auto p-4 md:p-8 space-y-6 pt-10">
+        <div className={`${appMode === 'side-by-side' ? 'max-w-[95%] xl:max-w-7xl' : 'max-w-4xl'} mx-auto p-4 md:p-8 space-y-6 pt-10 transition-all duration-300`}>
           <AnimatePresence>
             {messages.map((message, index) => (
               <MessageBubble key={index} message={message} />

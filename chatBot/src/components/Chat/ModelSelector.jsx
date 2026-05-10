@@ -9,7 +9,7 @@ const models = [
   { id: 'openrouter', name: 'OpenRouter', icon: Globe, color: 'text-emerald-400' },
   { id: 'deepseek', name: 'DeepSeek V3', icon: Box, color: 'text-indigo-400' },
   { id: 'chatgpt', name: 'ChatGPT-4', icon: Zap, color: 'text-green-400' },
-  { id: 'claude', name: 'Claude 3 Opus', icon: BrainCircuit, color: 'text-orange-400' },
+  { id: 'claude', name: 'Claude 3.5 Haiku', icon: BrainCircuit, color: 'text-orange-400' },
   { id: 'perplexity', name: 'Perplexity', icon: Lightbulb, color: 'text-cyan-400' },
 ];
 
@@ -68,7 +68,7 @@ const ModelSelector = ({ panel = 'direct' }) => {
                 >
                   <model.icon className={`w-4 h-4 ${model.color}`} />
                   {model.name}
-                  {model.id !== 'gemini' && model.id !== 'groq' && model.id !== 'deepseek' && model.id !== 'openrouter' && (
+                  {model.id !== 'gemini' && model.id !== 'groq' && model.id !== 'deepseek' && model.id !== 'openrouter' && model.id !== 'claude' && (
                     <span className="ml-auto text-[10px] uppercase tracking-wider bg-white/10 px-1.5 py-0.5 rounded text-ai-text-muted/70">
                       Soon
                     </span>

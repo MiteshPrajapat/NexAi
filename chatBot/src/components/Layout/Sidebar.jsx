@@ -23,10 +23,11 @@ const Sidebar = () => {
 
       {/* Sidebar Content */}
       <motion.div
-        className={`fixed md:static inset-y-0 left-0 z-30 w-72 bg-ai-panel border-r border-ai-border flex flex-col transition-transform duration-300 ease-in-out ${
-          isSidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+        className={`fixed md:static inset-y-0 left-0 z-30 bg-ai-panel border-r border-ai-border flex flex-col transition-all duration-300 ease-in-out overflow-hidden h-full ${
+          isSidebarOpen ? 'translate-x-0 w-72' : '-translate-x-full md:translate-x-0 md:w-0 md:border-r-0'
         }`}
       >
+        <div className="w-72 flex flex-col h-full min-h-screen md:min-h-0">
         <div className="p-4 flex items-center justify-between">
           <div className="flex items-center gap-2 text-ai-text">
             <div className="p-2 bg-gradient-to-tr from-ai-primary to-ai-secondary rounded-xl">
@@ -65,6 +66,7 @@ const Sidebar = () => {
             <Settings className="w-5 h-5" />
             <span className="font-medium">Settings</span>
           </button>
+        </div>
         </div>
       </motion.div>
     </>

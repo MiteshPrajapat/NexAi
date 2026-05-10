@@ -25,7 +25,7 @@ const getModelName = (modelId) => {
     case 'groq': return 'Groq (Llama 3)';
     case 'openrouter': return 'OpenRouter';
     case 'chatgpt': return 'ChatGPT-4';
-    case 'claude': return 'Claude 3 Opus';
+    case 'claude': return 'Claude 3.5 Haiku';
     case 'deepseek': return 'DeepSeek V3';
     case 'perplexity': return 'Perplexity';
     default: return modelId || 'AI Assistant';
@@ -95,7 +95,7 @@ const MessageBubble = ({ message }) => {
 
   if (message.isSideBySide) {
     return (
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex gap-4 w-full">
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex flex-col xl:flex-row gap-4 w-full">
         <ResponsePanel content={message.left.content} modelId={message.left.model} />
         <ResponsePanel content={message.right.content} modelId={message.right.model} />
       </motion.div>

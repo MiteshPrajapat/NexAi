@@ -25,7 +25,7 @@ export const ChatProvider = ({ children }) => {
   const toggleSidebar = () => setIsSidebarOpen(prev => !prev);
 
   const handleModelChange = (panel, modelId) => {
-    if (modelId !== 'gemini' && modelId !== 'groq' && modelId !== 'deepseek' && modelId !== 'openrouter') {
+    if (modelId !== 'gemini' && modelId !== 'groq' && modelId !== 'deepseek' && modelId !== 'openrouter' && modelId !== 'claude') {
       toast('Support Coming Soon', {
         icon: '🚀',
         style: {
