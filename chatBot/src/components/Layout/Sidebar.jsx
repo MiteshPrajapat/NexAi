@@ -1,10 +1,9 @@
-import React from 'react';
-import { MessageSquarePlus, Settings, Moon, Sun, PanelLeftClose, Sparkles } from 'lucide-react';
+import { MessageSquarePlus, Settings, Moon, Sun, PanelLeftClose, Sparkles, ShieldCheck } from 'lucide-react';
 import { useChat } from '../../context/ChatContext';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const Sidebar = () => {
-  const { clearChat, isSidebarOpen, toggleSidebar } = useChat();
+  const { clearChat, isSidebarOpen, toggleSidebar, currentView, setCurrentView, navigateToPolicy } = useChat();
 
   return (
     <>
@@ -29,7 +28,10 @@ const Sidebar = () => {
       >
         <div className="w-72 flex flex-col h-full min-h-screen md:min-h-0">
         <div className="p-4 flex items-center justify-between">
-          <div className="flex items-center gap-2 text-ai-text">
+          <div 
+            onClick={() => { setCurrentView('chat'); if (isSidebarOpen) toggleSidebar(); }}
+            className="flex items-center gap-2 text-ai-text cursor-pointer hover:opacity-85 transition-opacity"
+          >
             <div className="p-2 bg-gradient-to-tr from-ai-primary to-ai-secondary rounded-xl">
               <Sparkles className="w-5 h-5 text-white" />
             </div>
@@ -42,7 +44,7 @@ const Sidebar = () => {
 
         <div className="px-4 py-2 flex-1">
           <button
-            onClick={clearChat}
+            onClick={() => { clearChat(); setCurrentView('chat'); if (isSidebarOpen) toggleSidebar(); }}
             className="w-full flex items-center gap-3 px-4 py-3 bg-ai-primary/10 hover:bg-ai-primary/20 text-ai-primary rounded-xl transition-all duration-200 border border-ai-primary/20 hover:border-ai-primary/40 shadow-[0_0_15px_rgba(99,102,241,0.1)] hover:shadow-[0_0_20px_rgba(99,102,241,0.2)]"
           >
             <MessageSquarePlus className="w-5 h-5" />
@@ -58,6 +60,17 @@ const Sidebar = () => {
         </div>
 
         <div className="p-4 border-t border-ai-border flex flex-col gap-2">
+          <button 
+            onClick={() => { navigateToPolicy('privacy'); if (isSidebarOpen) toggleSidebar(); }}
+            className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-colors ${
+              currentView === 'policy' 
+                ? 'bg-ai-primary/20 text-ai-text border border-ai-primary/30' 
+                : 'text-ai-text-muted hover:text-ai-text hover:bg-white/5'
+            }`}
+          >
+            <ShieldCheck className="w-5 h-5" />
+            <span className="font-medium">Policy & Quality</span>
+          </button>
           <button className="flex items-center gap-3 px-4 py-3 text-ai-text-muted hover:text-ai-text hover:bg-white/5 rounded-xl transition-colors">
             <Moon className="w-5 h-5" />
             <span className="font-medium">Dark Mode</span>

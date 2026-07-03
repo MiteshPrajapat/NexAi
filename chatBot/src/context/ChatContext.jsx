@@ -21,6 +21,13 @@ export const ChatProvider = ({ children }) => {
     right: 'groq'
   });
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [currentView, setCurrentView] = useState('chat'); // 'chat' or 'policy'
+  const [policyTab, setPolicyTab] = useState('privacy');
+
+  const navigateToPolicy = (tab) => {
+    setPolicyTab(tab);
+    setCurrentView('policy');
+  };
 
   const toggleSidebar = () => setIsSidebarOpen(prev => !prev);
 
@@ -62,6 +69,11 @@ export const ChatProvider = ({ children }) => {
     toggleSidebar,
     addMessage,
     clearChat,
+    currentView,
+    setCurrentView,
+    policyTab,
+    setPolicyTab,
+    navigateToPolicy,
   };
 
   return <ChatContext.Provider value={value}>{children}</ChatContext.Provider>;
