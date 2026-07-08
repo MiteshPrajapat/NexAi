@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useChat } from '../../context/ChatContext';
+import AdSense from './AdSense';
 import { 
   ShieldCheck, 
   BookOpen, 
@@ -193,10 +194,8 @@ const PolicyPage = () => {
             {/* AdSense Zone */}
             <div className="hidden lg:block mt-6 glass-panel rounded-2xl p-4 border border-ai-border/30 bg-ai-panel/30 text-center">
               <span className="text-[10px] tracking-wider uppercase text-ai-text-muted/40 font-semibold block mb-2">Advertisement</span>
-              <div className="h-48 rounded-xl border border-dashed border-ai-border/50 bg-ai-bg/50 flex flex-col items-center justify-center p-3">
-                <Megaphone className="w-6 h-6 text-ai-text-muted/30 mb-2" />
-                <p className="text-[11px] text-ai-text-muted/50 font-medium">Responsive Ad Spot</p>
-                <p className="text-[9px] text-ai-text-muted/40 mt-1 max-w-[150px] leading-normal">Positioned separate from interaction elements.</p>
+              <div className="overflow-hidden flex justify-center items-center">
+                <AdSense />
               </div>
             </div>
           </aside>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import AdSense from './AdSense';
 import { 
   Sparkles, 
   Code, 
@@ -227,6 +228,14 @@ const WelcomeScreen = () => {
               </div>
             );
           })}
+        </div>
+      </div>
+
+      {/* AdSense Zone */}
+      <div className="w-full glass-panel rounded-2xl p-4 border border-ai-border/30 bg-ai-panel/30 text-center">
+        <span className="text-[10px] tracking-wider uppercase text-ai-text-muted/40 font-semibold block mb-2">Advertisement</span>
+        <div className="overflow-hidden flex justify-center items-center">
+          <AdSense />
         </div>
       </div>
     </div>
